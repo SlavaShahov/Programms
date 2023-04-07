@@ -1,0 +1,183 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void func(int *Mas, int N){
+    int min1;
+    int min2;
+    if(Mas[1]<Mas[0]){
+        min1=1;
+        min2=0;
+    }else{
+        min2=1;
+        min1=0;
+    }
+    for(int i=2;i<N; i++){
+        if(Mas[i]<Mas[min1]){
+            min2=min1;
+            min1=i;
+        }else if(Mas[i]<Mas[min2]){
+            min2=i;
+        }
+    }
+    if(min1>min2){
+        int t=min1;
+        min1=min2;
+        min2=t;
+    }
+    printf("\nmin1=%d   min2=%d", min1, min2);
+    for(int i=min1+1; i<min2; i++){
+        Mas[i]=0;
+    }
+}
+
+int main(){
+    int *A;
+    int n;
+    printf("Input n:"); scanf("%d", &n);
+    puts("\n");
+    A=(int*)malloc(n*sizeof(int));
+    srand(time(NULL));
+    for(int i=0; i<n; i++){
+        A[i]=rand()%50+1;
+        printf("%3d", A[i]);
+    }
+    func(A, n);
+    puts("\n");
+    for(int i=0; i<n; i++){
+        printf("%3d", A[i]);
+    }
+    
+    return 0;
+}
+
+void func1(int **Mas, int N){
+    for(int i=0;i<N;i++){
+        int t=rand()%10+2;
+        Mas[i]=(int*)calloc(t,sizeof(int));
+        for(int j=1;j<t;j++){
+            Mas[i][j]=rand()%20;
+            Mas[i][0]+=Mas[i][j];
+        }
+        for(int j=0;j<t;j++){
+            printf(" %d ", Mas[i][j]);
+        }
+        printf("\n");
+    }
+   
+}
+
+int main(){
+    int **A;
+    int a=10;
+    A=(int**)malloc(a*sizeof(int*));
+    func1(A, a);
+    return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+void FillRnd(int* Mas, int N) {
+    //puts("FillRnd");
+    srand(time(NULL));
+    for (int i = 0; i < N; i++) {
+        Mas[i] = rand() % N;
+        printf("%d ", Mas[i]);
+    }
+}
+
+void SelectSort(int* Mas, int N) {
+    //puts("SelectSort");
+    for (int i = 0; i < N - 1; i++) {
+        int k = i;
+        for (int j = i + 1; j < N; j++) {
+            //C++;
+            if (Mas[j] > Mas[k]) {
+                k = j;
+            }
+        }
+        //if (k!=i){
+        int r = Mas[i];
+        Mas[i] = Mas[k];
+        Mas[k] = r;
+        //M += 3;
+        //}
+    }
+    //printf("Compare=%d , Move=%d", C, M);
+    // T = C + M;
+    // C = 0;
+    // M = 0;
+}
+
+
+void PrintMas(int* Mas, int N) {
+    printf("PrintMas:\n");
+    for (int i = 0; i < N; i++) {
+        printf("%d ", Mas[i]);
+    }
+}
+
+
+void BSerch2(int* Mas, int N, int X) {
+    puts("BSerch2");
+    int C=0;
+    int L = 0; int R = N - 1; int in = 0;
+
+    while (L < R) {
+        int m = (L + R) / 2;
+        C++;
+        if (Mas[m] > X) {
+            L = m+1;
+        }
+        else R = m;
+    }
+    for (int i=R; i<N;i++){
+        if (Mas[i] == X) {
+            printf("X=%d i=%d\n ", Mas[i], i);
+        }
+        //else printf("Элемент не найден:(\n");
+    }
+    printf("C=%d\n", C);
+    C = 0;
+}
+
+void EnumSerch(int* Mas, int N, int X){
+    puts("EnumSerch");
+    int C=0;
+    for(int i=0; i<N; i++){
+        C++;
+        if(Mas[i]==X){
+            printf("X=%d i=%d\n ", Mas[i], i);
+        }
+    }
+    
+    printf("\n Compare=%d\n", C);
+    C=0;
+}
+
+int main(){
+    int *Mas1;
+    int n1=100;
+    int *Mas2;
+    int n2=1000;
+    Mas1=(int*)malloc(n1*sizeof(int));
+    Mas2=(int*)malloc(n2*sizeof(int));
+    //n=100
+    FillRnd(Mas1, n1);
+    SelectSort(Mas1, n1);printf("\n");
+    PrintMas(Mas1, n1);
+    int X=22;puts("\n");
+    BSerch2(Mas1, n1, X);
+    EnumSerch(Mas1, n1, X);
+    free(Mas1);
+    //n=1000
+    FillRnd(Mas2, n2);
+    SelectSort(Mas2, n2);printf("\n");
+    PrintMas(Mas2, n2);
+    X=22;puts("\n");
+    BSerch2(Mas2, n2, X);
+    EnumSerch(Mas2, n2, X);
+    free(Mas2);
+    return 0;
+}

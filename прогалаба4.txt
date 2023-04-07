@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(){
+    const int n=5;
+    int Max=0; int iM=0; int jM=0;
+    int m;
+    printf("Введите m:"); scanf("%d",&m);
+    int (*B)[n];
+    B=(int(*)[n])malloc(sizeof(int)*n*m);
+    srand(time(NULL));
+    for (int i=0; i<m; i++){
+        for (int j=0; j<n; j++){
+            B[i][j]=rand()%50;
+            printf("%4d", B[i][j]);
+            if(Max<B[i][j]){
+                Max=B[i][j];
+                iM=i;
+                jM=j;
+            }
+        }
+        printf("\n");
+    }
+    
+    int (*C)[n-1];
+    C=(int(*)[n-1])malloc(sizeof(int)*(n-1)*(m-1));
+    printf("\n");
+    
+	for(int i=0;i<m;i++){
+		for(int j=0;j<n;j++){
+			if (i==iM){
+				B[i][j]=-1;
+			}
+			if(B[i][j]==-1){
+				B[i][j]=B[i+1][j];	
+				B[i+1][j]=-1;
+			}
+		}
+	}
+
+	for(int i=0;i<m;i++){
+		for(int j=0;j<n;j++){
+			if (j==jM){
+				B[i][j]=-1;
+			}
+			if((B[i][j]==-1)&&(j!=n-1)){
+				B[i][j]=B[i][j+1];	
+				B[i][j+1]=-1;
+			}
+		}
+	}
+	for(int i=0;i<m-1;i++){
+		for(int j=0;j<n-1;j++){
+			C[i][j]=B[i][j];
+			printf("%4d",C[i][j]);
+		}
+		printf("\n");
+	}
+    
+    free(B);
+    return 0;
+
+}
+
+int main(){
+    int m, n;
+    int **A;
+    int **D;
+    printf("Введите m:");scanf("%d", &m);
+    printf("Введите n:");scanf("%d", &n);
+    srand(time(NULL));
+    A=(int **)malloc(m*sizeof(int *));
+    for(int i=0; i<m; i++){
+        A[i]=(int*)calloc(n,sizeof(int));
+    }
+    
+    D=(int **)malloc((m+1)*sizeof(int *));
+    for(int i=0; i<(m+1); i++){
+        D[i]=(int*)calloc(n+1,sizeof(int));
+    }
+    int sumAll=0;
+    int sumi=0;
+    int sumj=0;
+    
+    for(int i=0;i<m; i++){
+        sumi=0;
+        for(int j=0; j<n; j++){
+            A[i][j]=rand()%10;
+            printf("%4d", A[i][j]);
+            D[i][j]=A[i][j];
+            sumi=sumi+A[i][j];
+            sumAll=sumAll+A[i][j];
+            if(j==n-1){
+                D[i][j+1]=sumi;
+            }
+        }
+        printf("\n");
+    }
+    puts("\n");
+    for(int i=0;i<n; i++){
+        sumj=0;
+        for(int j=0; j<m; j++){
+            sumj=sumj+A[j][i];
+            if(j==m-1){
+                D[j+1][i]=sumj;
+            }
+        }
+    }
+    
+    for(int i=0; i<m+1; i++){
+        for(int j=0; j<n+1; j++){
+            
+            if((j==n)&&(i==m)){
+                D[i][j]=sumAll;
+            }
+            printf("%4d", D[i][j]);
+        }
+        printf("\n");
+    }
+    free(A);
+    free(D);
+    return 0;
+}

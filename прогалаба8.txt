@@ -1,0 +1,123 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
+#include <time.h>
+/*
+struct schools{
+    int num_sch;
+    int grad;
+    int vol_rec;
+};
+
+int main(){
+    
+    struct schools Mas[]={ {13, 115, 100}, 
+                            {1, 97, 80}, 
+                            {9, 134, 89}, 
+                            {98, 67, 56}, 
+                            {75, 89, 67}};
+    
+    int n = sizeof(Mas)/sizeof(Mas[0]);
+    for (int i=0; i<n; i++){
+        printf("Номер школы:%d \tКол-во выпускников:%d \tЧисло поступивших:%d\n", Mas[i].num_sch, Mas[i].grad,Mas[i].vol_rec);
+    }
+    int ind[n];
+    for(int i=0; i<n; i++){
+        ind[i]=i;
+    }
+    for (int i = 0; i < n - 1; i++) {
+        int k = i;
+        for (int j = i + 1; j < n; j++) {
+            if (Mas[ind[j]].vol_rec < Mas[ind[k]].vol_rec) {
+                k = j;
+            }
+        }
+        if (k!=i){
+        int r = ind[i];
+        ind[i] = ind[k];
+        ind[k] = r;
+        }
+    }
+    puts("\n");
+    for(int i=0; i<n; i++){
+        printf("Кол-во выпускников:%d \tЧисло поступивших:%d\n", Mas[ind[i]].grad,Mas[ind[i]].vol_rec);
+    }
+    
+    
+    
+    return 0;
+}*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
+#include <time.h>
+int n=10;
+struct school{
+    int room_num;
+    float S;
+    char faculty[3];	
+    float students;
+};
+int main(){
+	srand(time(NULL));
+	struct school Mas[n];
+	char mas_faculty[5][50]={"IVT","IT","IBD","IB","IZO"};
+	char str[10][70];
+	for(int i=0;i<n;i++){
+		Mas[i].room_num=i+1;
+		Mas[i].S=12+rand()%(18-12+1);
+		strcpy(Mas[i].faculty,mas_faculty[rand()%5]);
+		Mas[i].students=rand()%4+1;
+		printf("Номер комнаты:%d;\tПлощадь комнаты=%.0f;\tФакультет=%s;\tКол-во человек:%.0f;\n", Mas[i].room_num, Mas[i].S, Mas[i].faculty, Mas[i].students);
+		strcpy(str[i], Mas[i].faculty);
+	}
+	char freestring[]="del";
+	for(int i=0;i<n-1;i++){
+		for(int j=i+1;j<n;j++){
+			if((strcmp(str[i], str[j])==0)){
+				strcpy(str[j], freestring);
+			}
+		}
+	}
+	char masstr[10][70];
+	int z=0;
+	for(int i=0;i<n;i++){
+		if((strcmp(str[i], freestring)!=0)){
+			strcpy(masstr[z], str[i]);
+			z++;
+		}
+	}	
+	printf("\nВсе факультеты:\n");
+	for(int i=0;i<z;i++){
+		printf("%d)",i+1);
+		puts(masstr[i]);
+	}
+	
+	printf("Кол-во факультетов:%d\n", z);
+	printf("\n");
+	
+	int count_R=0;
+	float count_P=0;
+	float count_S=0;
+	int k=0;
+	for(int i=0;i<z;i++){
+		for(int j=0;j<n;j++){
+			if(strcmp(masstr[i],Mas[j].faculty)==0){
+			    k=j;
+				count_R++;
+				count_P=count_P+Mas[j].students;
+				count_S=count_S+Mas[j].S;
+			}
+		}
+		printf("Факультет %s:\n", Mas[k].faculty);
+		printf("\nКол-во комнат:%d \n", count_R);
+		printf("Количество людей:%.0f \n", count_P);
+		printf("Площадь:%.2f \n\n", count_S/count_P);
+		count_R=0;
+		count_P=0;
+		count_S=0;
+	}
+	return 0;
+}

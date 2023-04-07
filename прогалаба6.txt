@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <locale.h>
+float z1(float *a, float *b, float *c){
+    setlocale(LC_ALL, "Rus");
+    if((*a+*b)<=*c || (*b+*c)<=*a || (*a+*c)<=*b){
+        printf("Треугольник не может существовать");
+        return 0;
+    }else{
+        float P;
+        float S;
+        P=*a+*b+*c;
+        //pP - полупериметр для формулы Герона для площади
+        float pP=0;
+        pP=P/2;
+        S=sqrt(pP*(pP-*a)*(pP-*b)*(pP-*c));
+        printf("Периметр:%f  Площадь:%f", P, S);
+        return 1;
+    }    
+}
+
+int fact(int i){
+    if (i<=0) return 1;
+    return i*fact(i-1);
+}
+
+void z2(int m, int n, float p, float q, float &pm, float &pd){
+    float c;
+    c=fact(n)/(fact(m)*fact(n-m));
+    pd=c*powf(p,m)*powf(q,n-m);
+    pm=c*powf(q,m)*powf(p,n-m);
+}
+int main(){
+    // float a, b, c;
+    // printf("Введите первую сторону:"); scanf("%f", &a);
+    // printf("Введите вторую сторону:"); scanf("%f", &b);
+    // printf("Введите третью сторону:"); scanf("%f", &c);
+    // z1(&a, &b, &c);
+    int n,m;
+    printf("Введите n:"); scanf("%d",&n);
+    printf("Введите m:"); scanf("%d",&m);
+    float p;
+    float q;
+    float pm, pd;
+    p=0.45;
+    q=1-p;
+    z2(m, n, p, q, pm, pd);
+    printf("Вероятность для мальчиков:%.10f", pm);puts("\n");
+    printf("Вероятность для мальчиков:%.10f", pd);
+}

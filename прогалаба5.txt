@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+int main(){
+    
+    int m;
+    printf("Input m:"); scanf("%d", &m);
+    int k;
+    printf("Input k:"); scanf("%d", &k);
+    while(k>=m || k==0){
+        printf("! Condition: k<m (m=%d) and k!=0 ! \n Input k again:", m);scanf("%d", &k);
+    }
+    puts("\n");
+    srand(time(NULL));
+    int *A;
+    A=(int*)malloc(m*sizeof(int));
+    for(int i=0; i<m; i++){
+        A[i]=rand()%15;
+        printf("%4d", A[i]);
+    }
+    puts("\n");
+    int n=0;
+    if(m%k==0){
+        n=m/k;
+    }else{
+        n=m/k + 1;
+    }
+    int **B;
+    B=(int**)malloc(n*sizeof(int*));
+    for(int i=0;i<n;i++){
+        B[i]=(int*)calloc(k,sizeof(int));
+    }
+    
+    int count=0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<k;j++){
+            if(count==m){
+                B[i][j]=0;
+            }else{
+                B[i][j]=A[count];
+                count++;	
+            }
+        }
+    }
+    for(int i=0; i<n;i++){
+        for(int j=0;j<k;j++){
+            printf("%4d", B[i][j]);
+        }
+        printf("\n");
+    }
+    free(A);
+    free(B);
+    return 0;
+}
+
+int main(){
+    int a=9;
+    int **A;
+    A = (int**)malloc(a*sizeof(int*));
+    for(int i=0; i<a; i++){
+        A[i]=(int*)calloc(i+1,sizeof(int));
+        for(int j=0;j<i+1;j++){
+            A[i][j]=(i+1)*(j+1);
+            printf(" %d ", A[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}

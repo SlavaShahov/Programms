@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+// void func(int y){
+// int a = y % 19;
+// int b = y % 4;
+// int c = y % 7;
+// int d = (19*a + 15)%30;
+// int e = (2*b + 4*c + 6*d + 6) % 7;
+// int f=d+e;
+// int res;
+// if (f<=26){
+// res=4+f;
+// printf("%d апреля", res);
+// } else{
+// res = f-26;
+// printf("%d мая", res);
+// }
+// }
+// int main() {
+// printf("Введите год:");
+// int y;
+// scanf("%d",& y);
+// func(y);
+
+// return 0;
+// }
+
+double func(double x){
+    double res = 1;
+    for (int n=1;n<=10; n++){
+        res=res*x;
+        printf(" %f ", x);
+    }
+    return res;
+}
+int main(){
+    printf("Input x:");
+    float x;
+    scanf("%f", &x);
+    printf("%f", func(x));
+    return 0;
+}
